@@ -5,6 +5,7 @@ import org.jsoup.Connection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,8 @@ public class HomePage {
     protected static final By inputUser = By.id("email");
     protected static final By inputPasswd = By.id("passwd");
     protected static final By signInButton = By.id("SubmitLogin");
+    protected static final By searchField = By.id("search_query_top");
+    protected static final By searchButton = By.xpath("//button[@name='submit_search']");
     protected static final By womanButton = By.xpath("//a[@title='Women']");
     protected static final By costumerLabel = By.xpath("//a[@title='View my customer account']");
     protected static final By selectedDress = By.xpath("//a[@class='product-name']");
@@ -28,37 +31,50 @@ public class HomePage {
     protected static final By storeInformationLabel = By.xpath("//h4[text()='Store information']/following::ul//li");
 
     /*Initialize Driver*/
-    public HomePage(WebDriver driver)
-    {
+    public HomePage(WebDriver driver) {
         this.driver = driver;
         element = new Common(driver);
     }
 
     /*Actions in page */
-    public void clickSingInButton()
-    {
+    public void clickSingInButton() {
         element.doClick(singInButton);
     }
 
-    public void doLogin(String user,String passwd)
-    {
-        element.doSendKeys(inputUser,user);
-        element.doSendKeys(inputPasswd,passwd);
+    public void doLogin(String user, String passwd) {
+        element.doSendKeys(inputUser, user);
+        element.doSendKeys(inputPasswd, passwd);
         element.doClick(signInButton);
-        element.waitForElementPresent(costumerLabel,10).isDisplayed();
+        element.waitForElementPresent(costumerLabel, 10).isDisplayed();
     }
 
     public void doShop(String dressType) throws InterruptedException {
         element.doClick(womanButton);
-        element.doSelectOptionByText(selectedDress,dressType);
+        element.doSelectOptionByText(selectedDress, dressType);
         element.doClick(addToCartButton);
         Thread.sleep(5000);
-        element.waitForElementPresent(continueShoppingButton,10).click();
+        element.waitForElementPresent(continueShoppingButton, 10).click();
     }
 
+    public void doSearch(String itemToSearch) throws InterruptedException {
+        element.doClick(searchField);
+        element.doSendKeys(searchField, itemToSearch);
+        element.doClick(searchButton);
+        Thread.sleep(5000);
 
-    public Boolean verifyOrder(String text)
-    {
+        WebElement article = element.getElementByLinkText(itemToSearch);
+        if (article != null) {
+
+            String attribute = driver.findElement(By.xpath("//body/div/div[2]/div/div[3]/div[2]/ul/li/div/div[2]/h5/a[@title='" + itemToSearch + "']")).getAttribute("title");
+            Assert.assertEquals(itemToSearch, attribute);
+            System.out.println("The Item searched: "+attribute+" is equal than the Expected: "+itemToSearch+"");
+            Thread.sleep(5000);
+        } else
+            System.out.println("Element searched is not found!");
+
+    }
+
+    public Boolean verifyOrder(String text) {
         element.doClick(cartProducts);
         WebElement article = element.getElementByLinkText(text);
         return article != null;
@@ -67,12 +83,11 @@ public class HomePage {
     public Boolean deleteItem(String item) throws InterruptedException {
         element.doClick(cartProducts);
         WebElement article = element.getElementByLinkText(item);
-        if(article != null)
-        {
-            String attribute = driver.findElement(By.xpath("//table[@id='cart_summary']//a[text()='"+item+"']/ancestor::tr")).getAttribute("id");
+        if (article != null) {
+            String attribute = driver.findElement(By.xpath("//table[@id='cart_summary']//a[text()='" + item + "']/ancestor::tr")).getAttribute("id");
             System.out.println(attribute);
             attribute = attribute.replace("product_", "");
-            element.doClickELementBySpecificId(deleteButton,attribute);
+            element.doClickELementBySpecificId(deleteButton, attribute);
             Thread.sleep(5000);
             return true;
         }
@@ -84,12 +99,10 @@ public class HomePage {
         Boolean flag = false;
         List<WebElement> elements = driver.findElements(storeInformationLabel);
         element.goToFooter();
-        for(int i = 0; i < elements.size(); i++)
-        {
-            if(Arrays.toString(text).contains(elements.get(i).getText()))
-            {
+        for (int i = 0; i < elements.size(); i++) {
+            if (Arrays.toString(text).contains(elements.get(i).getText())) {
                 flag = true;
-            }else {
+            } else {
                 flag = false;
                 break;
             }

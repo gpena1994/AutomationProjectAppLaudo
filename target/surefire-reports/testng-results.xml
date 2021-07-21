@@ -2,16 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2021-07-16T00:48:28 EDT" name="SampleTest" finished-at="2021-07-16T00:48:28 EDT" duration-ms="46">
+  <suite started-at="2021-07-21T13:04:43 EDT" name="Command line suite" finished-at="2021-07-21T13:05:00 EDT" duration-ms="16892">
     <groups>
     </groups>
-    <test started-at="2021-07-16T00:48:28 EDT" name="Command line test" finished-at="2021-07-16T00:48:28 EDT" duration-ms="46">
-      <class name="SampleTest">
-        <test-method signature="Test1()[pri:0, instance:SampleTest@6c9f5c0d]" started-at="2021-07-16T00:48:28 EDT" name="Test1" finished-at="2021-07-16T00:48:28 EDT" duration-ms="5" status="PASS">
+    <test started-at="2021-07-21T13:04:43 EDT" name="Command line test" finished-at="2021-07-21T13:05:00 EDT" duration-ms="16892">
+      <class name="StoreInformationTest">
+        <test-method is-config="true" signature="setUpDriver()[pri:0, instance:StoreInformationTest@6c779568]" started-at="2021-07-21T13:04:43 EDT" name="setUpDriver" finished-at="2021-07-21T13:04:56 EDT" duration-ms="13124" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Test1 -->
-      </class> <!-- SampleTest -->
+        </test-method> <!-- setUpDriver -->
+        <test-method signature="ValidateStoreInformation()[pri:0, instance:StoreInformationTest@6c779568]" started-at="2021-07-21T13:04:56 EDT" name="ValidateStoreInformation" description="Validate Store Information" finished-at="2021-07-21T13:04:59 EDT" duration-ms="3217" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ValidateStoreInformation -->
+        <test-method is-config="true" signature="closeDriver()[pri:0, instance:StoreInformationTest@6c779568]" started-at="2021-07-21T13:04:59 EDT" name="closeDriver" finished-at="2021-07-21T13:05:00 EDT" duration-ms="335" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeDriver -->
+      </class> <!-- StoreInformationTest -->
     </test> <!-- Command line test -->
-  </suite> <!-- SampleTest -->
+  </suite> <!-- Command line suite -->
 </testng-results>

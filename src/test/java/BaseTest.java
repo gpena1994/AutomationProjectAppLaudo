@@ -11,7 +11,6 @@ import java.util.Properties;
 public class BaseTest {
 
         /* Pages instances */
-
         DriverFactory driverFactory;
         public WebDriver driver;
         public Properties properties;
